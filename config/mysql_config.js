@@ -7,7 +7,7 @@ const MYSQL_CONFIG = {
     host: 'sh-cdb-ehruedd5.sql.tencentcdb.com',
     port: '61670'
 }
-const SECRET = 'gaood-123'
+const SECRET = 'gaood-1123'
 module.exports = {
     MYSQL_CONFIG,
     SECRET
