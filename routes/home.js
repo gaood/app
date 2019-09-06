@@ -7,4 +7,5 @@ router.get('/',homeCtl.index)
 
 router.post('/upload',homeCtl.upload)
 
+router.get('/test',homeCtl.test)
 module.exports = router;
