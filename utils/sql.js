@@ -26,11 +26,13 @@ const USER_LOGIN = (u_phone, u_password)=> `SELECT
         FROM users
      WHERE u_phone = "${u_phone}" AND u_password = "${u_password}";`
 
-
+//查询手机号是否存在
+const CHECK_PHONE =(u_phone)=> `SELECT u_phone FROM users WHERE u_phone = "${u_phone}";`
 module.exports = {
     QUERY_TABLE,
     QUERY_BYID,
     CREATE_USER,
     UPDATE_USER,
-    USER_LOGIN
+    USER_LOGIN,
+    CHECK_PHONE
 }

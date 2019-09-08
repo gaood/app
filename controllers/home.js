@@ -1,6 +1,6 @@
 const path = require('path');
 const { query } = require('../utils/query');
-const { QUERY_TABLE, QUERY_BYID, CREATE_USER, UPDATE_USER, USER_LOGIN } = require('../utils/sql');
+const { QUERY_TABLE } = require('../utils/sql');
 
 class HomeCtl {
 

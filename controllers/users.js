@@ -1,6 +1,6 @@
 const uuid = require('node-uuid');
 const { query } = require('../utils/query');
-const { QUERY_TABLE, QUERY_BYID, CREATE_USER, UPDATE_USER, USER_LOGIN } = require('../utils/sql');
+const { QUERY_BYID, CREATE_USER, UPDATE_USER, USER_LOGIN } = require('../utils/sql');
 const { crytPassWord } = require('../utils/func');
 const jsonwebtoken = require('jsonwebtoken');
 const { SECRET } = require('../config/mysql_config');
