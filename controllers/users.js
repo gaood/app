@@ -89,6 +89,7 @@ class UsersCtl {
                     const u_id = value[0]['u_id'];
                     const token = jsonwebtoken.sign({ u_phone, u_id }, SECRET);
                     console.log(token)
+                    value[0]['token'] = token
                     ctx.body = value
                 }).catch(err => {
                     ctx.body = err

@@ -3,6 +3,9 @@ const { CHECK_PHONE } = require('../utils/sql');
 
 class FuncCtl{
     async checkPhone(ctx){
+        ctx.verifyParams({
+            u_phone: { type: 'string', required: true }
+        });
         console.log(ctx.request)
         await query(CHECK_PHONE(ctx.request.body['u_phone'])).then(value=>{
             
