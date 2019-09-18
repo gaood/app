@@ -16,6 +16,7 @@ const UPDATE_USER = (key, value, u_id) => `UPDATE users SET ${key} = "${value}"
 const USER_LOGIN = (u_phone, u_password)=> `SELECT 
         u_name,
         u_phone,
+        u_sex,
         u_id,
         u_auth,
         u_avatar,
