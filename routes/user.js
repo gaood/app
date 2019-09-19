@@ -11,7 +11,7 @@ const permissionCtl = require('../controllers/permission');
 const auth = jwt({ SECRET });
 
 //查询单个用户信息
-router.get('/:id',permissionCtl.checkOwner, usersCtl.findById)
+router.get('/:id', permissionCtl.auth,permissionCtl.checkOwner, usersCtl.findById)
 // 更新用户信息
 router.put('/:id', permissionCtl.auth,permissionCtl.checkOwner, usersCtl.update)
 //注册用户号
