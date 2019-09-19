@@ -34,7 +34,7 @@ class UsersCtl {
             ctx.request.body['value'],
             ctx.params.id
         )).then(value => {
-            this.findById
+            this.findById(ctx)
             //ctx.body = value
         }).catch(err => {
             console.log(err);
