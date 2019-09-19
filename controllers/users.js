@@ -12,21 +12,28 @@ class UsersCtl {
 
     //查询用户信息
     async findById(ctx) {
-
+        //ctx.body ={"message": `更新用户ID信息`};
         await query(QUERY_BYID(ctx.params.id)).then(
             value => {
+                console.log("+")
                 if (value == 0) {
                     ctx.throw(412, '用户ID不存在！');
                 }
+                console.log(value)
                 ctx.body = value
+                return value
+                
             }
         ).catch(err => {
             err.status = 412
             ctx.body = err
         });
     }
+
+   
     //更新用户信息
     async update(ctx) {
+        var _this = this;
         ctx.body = `更新用户ID:${ctx.params.id}信息`;
         console.log(ctx.request.body)
         await query(UPDATE_USER(
@@ -34,13 +41,13 @@ class UsersCtl {
             ctx.request.body['value'],
             ctx.params.id
         )).then(value => {
-            this.findById(ctx)
-            //ctx.body = value
+           ctx.body = {"status":0}
         }).catch(err => {
             console.log(err);
             ctx.body = err;
         })
 
+        
     }
 
 
