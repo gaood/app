@@ -11,7 +11,7 @@ class HomeCtl {
     upload(ctx) {
         const file = ctx.request.files.file;
         const basename = path.basename(file.path);
-        ctx.body = { url:  `${ctx.origin}/uploads/${basename}` };
+        ctx.body = { url:  `http://123.206.230.76/uploads/${basename}` };
     }
     async test(ctx){
         await query(QUERY_TABLE('users')).then(value=>{
