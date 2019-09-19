@@ -9,13 +9,12 @@ const { SECRET } = require('../config/mysql_config');
 
 
 class UsersCtl {
-    
+
     //查询用户信息
     async findById(ctx) {
 
         await query(QUERY_BYID(ctx.params.id)).then(
             value => {
-                ctx.body = `这是用户ID:${ctx.params.id}`;
                 if (value == 0) {
                     ctx.throw(412, '用户ID不存在！');
                 }
@@ -35,7 +34,8 @@ class UsersCtl {
             ctx.request.body['value'],
             ctx.params.id
         )).then(value => {
-            ctx.body = value
+            this.findById
+            //ctx.body = value
         }).catch(err => {
             console.log(err);
             ctx.body = err;
@@ -46,7 +46,7 @@ class UsersCtl {
 
     //创建用户
     async create(ctx) {
-        
+
         ctx.verifyParams({
             u_name: { type: 'string', required: true },
             u_password: { type: 'string', required: true },
