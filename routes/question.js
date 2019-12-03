@@ -5,6 +5,6 @@ const permissionCtl = require('../controllers/permission');
 const questionCtl = require('../controllers/question');
 
 
-router.post('/insert',permissionCtl.auth,questionCtl.insert);
+router.post('/insert',questionCtl.insert);
 
 module.exports = router;

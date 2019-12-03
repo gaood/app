@@ -29,11 +29,22 @@ const USER_LOGIN = (u_phone, u_password)=> `SELECT
 
 //查询手机号是否存在
 const CHECK_PHONE =(u_phone)=> `SELECT u_phone FROM users WHERE u_phone = "${u_phone}";`
+//---------------問題插入---------------------------
+//插入问题
+const QUESTION_INSERT_CONTENT = (u_id,a_type,content)=>`INSERT user_articles ( users_u_id, a_type, a_content )
+VALUES
+	( ${u_id}, ${a_type}, ${content} );`
+//插入分类
+const QUESTION_INSERT_TYPE = (type_desc,type_weight=0)=>`INSERT article_type(type_desc,type_weight) VALUES("${type_desc}",${type_weight});`
+
+
 module.exports = {
     QUERY_TABLE,
     QUERY_BYID,
     CREATE_USER,
     UPDATE_USER,
     USER_LOGIN,
-    CHECK_PHONE
-}
+    CHECK_PHONE,
+    QUESTION_INSERT_TYPE,
+    QUESTION_INSERT_CONTENT
+};  
