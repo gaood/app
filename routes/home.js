@@ -26,18 +26,19 @@ var storage = multer.diskStorage({
   //路由
   var fileList =[] ;
   router.post('/upload', upload.single('file'), async (ctx, next) => {
-      console.log(ctx.request.files.file instanceof Array)
+      console.log(ctx.request.files['files[]'] instanceof Array)
       
-      if (ctx.request.files.file instanceof Array ) {
-        ctx.request.files.file.forEach((item,index,array)=>{
+      if (ctx.request.files['files[]'] instanceof Array ) {
+        ctx.request.files['files[]'].forEach((item,index,array)=>{
           console.log(item)
+          console.log(item.path.split('/')[item.path.split('/').length-1])
           console.log(index)
         })
       } 
       
-      //console.log(ctx.request.files.file.path.split('\\')[ctx.request.files.file.path.split('\\').length-1])
+      
     ctx.body = {
-      'filename': ctx.request.files.file.name//返回文件名
+      'filename': ctx.request.files['files[]'].name//返回文件名
     }
   })
 
