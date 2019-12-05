@@ -8,6 +8,7 @@ class QuestionCtl{
         
         console.log(ctx.request.body);
         console.log("*"*30);
+        /** 
         console.log(QUESTION_INSERT_TYPE('实时插入',1));
         ctx.body = ctx.request.body;
         var sqlParamsEntity = [];
@@ -28,6 +29,7 @@ class QuestionCtl{
             }
         })
         //QuestionCtl.prototype.type(ctx)
+        */
     }
     //添加图片
     async image(ctx){}
