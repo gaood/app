@@ -36,6 +36,8 @@ var storage = multer.diskStorage({
         })
       } else{
           console.log(files.name)
+          console.log(files)
+          console.log(!files.path)
           if(!files.path){
             console.log("没有上传图片")
           }
