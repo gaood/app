@@ -26,8 +26,8 @@ var storage = multer.diskStorage({
   //路由
   var fileList =[] ;
   router.post('/upload', upload.single('file'), async (ctx, next) => {
-      console.log(ctx.request.files['files[]'] instanceof Array)
       var files = ctx.request.files['files[]']
+      console.log(files)
       if (files instanceof Array ) {
         files.forEach((item,index,array)=>{
           console.log(item)
