@@ -40,7 +40,7 @@ var storage = multer.diskStorage({
           
           //console.log(files.path.split('/')[files.path.split('/').length-1])
           console.log(files)
-          const basename = path(files.path)
+          const basename = path.basename(files.path)
           console.log(basename)
           ctx.body = {
             url:`${ctx.origin}/uploads/${basename}`
