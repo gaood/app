@@ -13,7 +13,7 @@ const UPDATE_USER = (key, value, u_id) => `UPDATE users SET ${key} = "${value}"
     WHERE u_id = "${u_id}";`
 
 //用户登录
-const USER_LOGIN = (u_phone, u_password)=> `SELECT 
+const USER_LOGIN = (u_phone, u_password) => `SELECT 
         u_name,
         u_phone,
         u_sex,
@@ -28,14 +28,18 @@ const USER_LOGIN = (u_phone, u_password)=> `SELECT
      WHERE u_phone = "${u_phone}" AND u_password = "${u_password}";`
 
 //查询手机号是否存在
-const CHECK_PHONE =(u_phone)=> `SELECT u_phone FROM users WHERE u_phone = "${u_phone}";`
+const CHECK_PHONE = (u_phone) => `SELECT u_phone FROM users WHERE u_phone = "${u_phone}";`
 //---------------問題插入---------------------------
 //插入问题
-const QUESTION_INSERT_CONTENT = (u_id,a_type,content)=>`INSERT user_articles ( users_u_id, a_type, a_content )
+const QUESTION_INSERT_CONTENT = (u_id, a_type, content) => `INSERT user_articles ( users_u_id, a_type, a_content )
 VALUES
 	( ${u_id}, ${a_type}, ${content} );`
 //插入分类
-const QUESTION_INSERT_TYPE = (type_desc,type_weight=0)=>`INSERT article_type(type_desc,type_weight) VALUES("${type_desc}",${type_weight});`
+const QUESTION_INSERT_TYPE = (type_desc, type_weight = 0) => `INSERT article_type(type_desc,type_weight) 
+    VALUES("${type_desc}",${type_weight});`
+//插入图片地址
+const QUESTION_INSERT_IMAGE = (articles_id, image_url) => `INSERT article_images(articles_id,image_url)
+    VALUES("${articles_id}","${image_url}");`
 
 
 module.exports = {
@@ -46,5 +50,6 @@ module.exports = {
     USER_LOGIN,
     CHECK_PHONE,
     QUESTION_INSERT_TYPE,
-    QUESTION_INSERT_CONTENT
+    QUESTION_INSERT_CONTENT,
+    QUESTION_INSERT_IMAGE
 };  
