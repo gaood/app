@@ -48,11 +48,6 @@ var storage = multer.diskStorage({
             url:`${ctx.origin}/uploads/${basename}`
           }
       }
-      
-      
-    ctx.body = {
-      'filename': ctx.request.files['files[]'].name//返回文件名
-    }
   })
 
 router.get('/test',homeCtl.test)
