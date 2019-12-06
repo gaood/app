@@ -8,6 +8,11 @@ class QuestionCtl{
         
         console.log(ctx.request.body);
         console.log("*"*30);
+        ctx.body = {
+            "content":ctx.body.content,
+            "type":ctx.body.type
+        }
+        return "ok"
         /** 
         console.log(QUESTION_INSERT_TYPE('实时插入',1));
         ctx.body = ctx.request.body;
