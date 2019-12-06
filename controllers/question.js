@@ -7,9 +7,10 @@ class QuestionCtl{
     async insert(ctx){
         
         console.log(ctx.request.body);
+        console.log(ctx.request.body.content)
         ctx.body = {
-            "content":ctx.body['content'],
-            "type":ctx.body['type']
+            "content":ctx.request.body.content,
+            "type":ctx.request.body.type
         }
         return "ok"
         /** 
