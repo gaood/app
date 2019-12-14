@@ -27,27 +27,29 @@ var storage = multer.diskStorage({
   var fileList =[] ;
   router.post('/upload', upload.single('file'), async (ctx, next) => {
       var files = ctx.request.files['files[]']
-
-      
+      var origin = "http://123.206.230.76"
+      var backUrl = []
       console.log(files)
       if (files instanceof Array ) {
         files.forEach((item,index,array)=>{
-          console.log(item)
-          console.log(item.path.split('/')[item.path.split('/').length-1])
-          console.log(index)
+          const basename = path.basename(item.path)
+          const itemUrl = {
+            'url':`${origin}/uploads/${basename}`
+          } 
+          backUrl.push(itemUrl)
+
         })
       } else{
-          
-          //console.log(files.path.split('/')[files.path.split('/').length-1])
           console.log(files)
           const basename = path.basename(files.path)
           console.log(basename)
-          const url =`${ctx.origin}/uploads/${basename}`
-          console.log(url)
-          ctx.body = {
-            url:`${ctx.origin}/uploads/${basename}`
+          itemUrl= {
+            url:`${origin}/uploads/${basename}`
           }
+          backUrl.push(itemUrl)
       }
+      console.log(backUrl)
+      ctx.body = backUrl
   })
 
 router.get('/test',homeCtl.test)
