@@ -1,6 +1,7 @@
 
 // 查询语句
 const QUERY_TABLE = (tableName) => `SELECT * FROM ${tableName}`
+const QUERY_TABLE_FIELD = (tableField,tableName) => `SELECT ${tableField} FROM ${tableName}`
 //查询单个用户信息
 const QUERY_BYID = (u_id) => `SELECT * FROM users WHERE u_id = "${u_id}" `
 // 创建用户
@@ -38,8 +39,8 @@ VALUES
 const QUESTION_INSERT_TYPE = (type_desc, type_weight = 0) => `INSERT article_type(type_desc,type_weight) 
     VALUES("${type_desc}",${type_weight});`
 //插入图片地址
-const QUESTION_INSERT_IMAGE = (articles_id, image_url) => `INSERT article_images(articles_id,image_url)
-    VALUES("${articles_id}","${image_url}");`
+const QUESTION_INSERT_IMAGE = (image_url) => `INSERT article_images(articles_id,image_url)
+    VALUES((select max(a_id) from user_articles) ,"${image_url}");`
 
 
 module.exports = {

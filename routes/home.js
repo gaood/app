@@ -1,6 +1,6 @@
 const Router = require('koa-router');
 const router = new Router();
-
+const { QUESTION_INSERT_CONTENT ,QUESTION_INSERT_IMAGE} = require('../utils/sql')
 const homeCtl = require('../controllers/home');
 const multer = require('koa-multer');
 const path=require('path')
@@ -26,10 +26,19 @@ var storage = multer.diskStorage({
   //路由
   var fileList =[] ;
   router.post('/upload', upload.single('file'), async (ctx, next) => {
-    console.log("######")  
-    console.log(ctx.request.body)
-    console.log(ctx.request)
-    console.log("########")
+      console.log("######")  
+      console.log(ctx.request.body)
+      console.log(ctx.request)
+      console.log("########")
+      var sqlParamsEntity = [];
+      const insertContent = QUESTION_INSERT_CONTENT(
+        '5e11f860d47c11e9b0d60ff8b54fb8a9',
+        ctx.request.body.type,
+        ctx.request.body.content,
+      ) 
+     
+      sqlParamsEntity.push(insertContent);
+      
       var files = ctx.request.files['files[]']
       var origin = "http://123.206.230.76"
       var backUrl = []
@@ -37,22 +46,28 @@ var storage = multer.diskStorage({
       if (files instanceof Array ) {
         files.forEach((item,index,array)=>{
           const basename = path.basename(item.path)
-          const itemUrl = {
-            'url':`${origin}/uploads/${basename}`
-          } 
-          backUrl.push(itemUrl)
-
+          const insertImage = QUESTION_INSERT_IMAGE(`${origin}/uploads/${basename}`)
+          sqlParamsEntity.push(insertImage);
         })
       } else{
           console.log(files)
           const basename = path.basename(files.path)
           console.log(basename)
-          itemUrl= {
-            url:`${origin}/uploads/${basename}`
-          }
-          backUrl.push(itemUrl)
+          const insertImage = QUESTION_INSERT_IMAGE(`${origin}/uploads/${basename}`)
+          sqlParamsEntity.push(insertImage);
       }
-      console.log(backUrl)
+
+      funcCtl.execTrans(sqlParamsEntity,(err, info)=>{
+            if(err){
+                console.error("事务执行失败******************");
+                ctx.throw(412,err);
+                ctx.body = err;
+            }else{
+                console.log("done.");
+                console.log(info);
+                var ret = info;
+            }
+        })
       ctx.body = backUrl
   })
 

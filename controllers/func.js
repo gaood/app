@@ -32,50 +32,30 @@ class FuncCtl {
     })
   }
   async execTrans(sqlparamsEntities, callback) {
-    // const pool = mysql.createPool(MYSQL_CONFIG);
     pool.getConnection(function (err, connection) {
-
       if (err) {
-
         return callback(err, null);
-
       }
-
       connection.beginTransaction(function (err) {
-
         if (err) {
-
           return callback(err, null);
-
         }
-
         console.log("开始执行transaction，共执行" + sqlparamsEntities.length + "条数据");
-
         var funcAry = [];
-
         sqlparamsEntities.forEach(function (sql_param) {
           var temp = function (cb) {
             var sql = sql_param.sql;
             var param = sql_param.params;
             connection.query(sql_param, param, function (tErr, rows) {
               if (tErr) {
-
                 connection.rollback(function () {
-
                   console.log("事务失败，" + sql_param + "，ERROR：" + tErr);
-
                   throw tErr;
-
                 });
-
               } else {
-
                 return cb(null, 'ok');
-
               }
-
             })
-
           };
 
           funcAry.push(temp);
