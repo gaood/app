@@ -4,7 +4,7 @@ const { QUESTION_INSERT_CONTENT ,QUESTION_INSERT_IMAGE} = require('../utils/sql'
 const homeCtl = require('../controllers/home');
 const multer = require('koa-multer');
 const path=require('path')
-const funcCtl = require('./func')
+const funcCtl = require('../controllers/func')
 
 
 router.get('/',homeCtl.index)
@@ -37,9 +37,7 @@ var storage = multer.diskStorage({
         ctx.request.body.type,
         ctx.request.body.content,
       ) 
-     
       sqlParamsEntity.push(insertContent);
-      
       var files = ctx.request.files['files[]']
       var origin = "http://123.206.230.76"
       var backUrl = []
@@ -58,18 +56,19 @@ var storage = multer.diskStorage({
           sqlParamsEntity.push(insertImage);
       }
 
-    //   funcCtl.execTrans(sqlParamsEntity,(err, info)=>{
-    //     if(err){
-    //         console.error("事务执行失败******************");
-    //         ctx.throw(412,err);
-    //         ctx.body = err;
-    //     }else{
-    //         console.log("done.");
-    //         console.log(info);
-    //         var ret = info;
-    //     }
-    // })
+      funcCtl.execTrans(sqlParamsEntity,(err, info)=>{
+        if(err){
+            console.error("事务执行失败******************");
+            ctx.throw(412,err);
+            ctx.body = err;
+        }else{
+            console.log("done.");
+            console.log(info);
+            var ret = info;
+        }
+    })
       console.log(sqlParamsEntity)
+      
       ctx.body = sqlParamsEntity
   })
 
