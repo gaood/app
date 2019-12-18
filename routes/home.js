@@ -4,6 +4,7 @@ const { QUESTION_INSERT_CONTENT ,QUESTION_INSERT_IMAGE} = require('../utils/sql'
 const homeCtl = require('../controllers/home');
 const multer = require('koa-multer');
 const path=require('path')
+const funcCtl = require('./func')
 
 
 router.get('/',homeCtl.index)
