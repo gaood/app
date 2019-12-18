@@ -69,6 +69,7 @@ var storage = multer.diskStorage({
     //         var ret = info;
     //     }
     // })
+      console.log(sqlParamsEntity)
       ctx.body = sqlParamsEntity
   })
 
