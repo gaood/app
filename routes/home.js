@@ -26,6 +26,7 @@ var storage = multer.diskStorage({
   //路由
   var fileList =[] ;
   router.post('/upload', upload.single('file'), async (ctx, next) => {
+      console.log(ctx.request.body)
       var files = ctx.request.files['files[]']
       var origin = "http://123.206.230.76"
       var backUrl = []
