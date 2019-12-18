@@ -58,18 +58,18 @@ var storage = multer.diskStorage({
           sqlParamsEntity.push(insertImage);
       }
 
-      funcCtl.execTrans(sqlParamsEntity,(err, info)=>{
-            if(err){
-                console.error("事务执行失败******************");
-                ctx.throw(412,err);
-                ctx.body = err;
-            }else{
-                console.log("done.");
-                console.log(info);
-                var ret = info;
-            }
-        })
-      ctx.body = backUrl
+    //   funcCtl.execTrans(sqlParamsEntity,(err, info)=>{
+    //     if(err){
+    //         console.error("事务执行失败******************");
+    //         ctx.throw(412,err);
+    //         ctx.body = err;
+    //     }else{
+    //         console.log("done.");
+    //         console.log(info);
+    //         var ret = info;
+    //     }
+    // })
+      ctx.body = sqlParamsEntity
   })
 
 router.get('/test',homeCtl.test)
