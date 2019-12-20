@@ -60,12 +60,12 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
       code = 1;
     } else {
       console.log("结果");
-      code = 0;
+      ctx.body = {
+        "status": 0
+      }
     }
   })
-  ctx.body = {
-    "status": code
-  }
+  
 })
 
 router.get('/test', homeCtl.test)
