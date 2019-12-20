@@ -63,11 +63,11 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
       code = 0;
       console.log(code);
     }
+    ctx.body = {
+      "status": code
+    }
   })
-  console.log(code);
-  ctx.body = {
-    "status": code
-  }
+  
 })
 
 router.get('/test', homeCtl.test)
