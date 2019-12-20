@@ -27,7 +27,6 @@ var upload = multer({ storage });
 //路由
 var fileList = [];
 router.post('/upload', upload.single('file'), async (ctx, next) => {
-  var code = -1;
   var sqlParamsEntity = [];
   var userid = "5e11f860d47c11e9b0d60ff8b54fb8a9";
   const insertContent = QUESTION_INSERT_CONTENT(
@@ -57,22 +56,16 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
     if (err) {
       console.error("事务执行失败******************");
       ctx.throw(412, err);
-      code = 1;
+       var code = 1;
     } else {
       console.log("结果");
-      code = 0;
+      var code = 0;
       console.log(code);
-      
     }
-    
-  }).finally(()=>{
-    ctx.body = {
-      "status": code
-    }
+  })
+  ctx.body={
+    "status":code
   }
-
-  )
-  
 })
 
 router.get('/test', homeCtl.test)
