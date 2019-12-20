@@ -18,7 +18,7 @@ class HomeCtl {
         ctx.body = { url:  `http://123.206.230.76/uploads/${basename}` };
     }
     async test(ctx){
-        mconsole.log("########----test----############")
+        console.log("########----test----############")
         await query(QUERY_TABLE(user_articles)).then((res)=>{
           console.log("查询")
           console.log(res)
