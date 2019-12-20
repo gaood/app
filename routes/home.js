@@ -41,7 +41,6 @@ var storage = multer.diskStorage({
       sqlParamsEntity.push(insertContent);
       var files = ctx.request.files['files[]']
       var origin = "http://123.206.230.76"
-      var backUrl = []
       console.log(files)
       if (files instanceof Array ) {
         files.forEach((item,index,array)=>{
@@ -68,9 +67,6 @@ var storage = multer.diskStorage({
             }
         }
     })
-      console.log(sqlParamsEntity)
-      
-      ctx.body = sqlParamsEntity
   })
 
 router.get('/test',homeCtl.test)
