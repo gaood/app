@@ -34,7 +34,8 @@ var storage = multer.diskStorage({
       var sqlParamsEntity = [];
       const insertContent = QUESTION_INSERT_CONTENT(
         '5e11f860d47c11e9b0d60ff8b54fb8a9',
-        ctx.request.body.type,
+        //ctx.request.body.type,
+        1,
         ctx.request.body.content,
       ) 
       sqlParamsEntity.push(insertContent);
