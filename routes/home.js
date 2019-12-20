@@ -32,11 +32,12 @@ var storage = multer.diskStorage({
       console.log(ctx.request)
       console.log("########")
       var sqlParamsEntity = [];
+      var userid="5e11f860d47c11e9b0d60ff8b54fb8a9",
       const insertContent = QUESTION_INSERT_CONTENT(
-        "5e11f860d47c11e9b0d60ff8b54fb8a9",
+        `"${userid}"`,
         //ctx.request.body.type,
         1,
-        `${ctx.request.body.content}`,
+        `"${ctx.request.body.content}"`,
       ) 
       sqlParamsEntity.push(insertContent);
       var files = ctx.request.files['files[]']
