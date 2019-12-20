@@ -19,7 +19,7 @@ class HomeCtl {
     }
     async test(ctx){
         console.log("########----test----############")
-        await query(QUERY_TABLE(user_articles)).then((res)=>{
+        await query(QUERY_TABLE('user_articles')).then((res)=>{
           console.log("查询")
           console.log(res)
         })
