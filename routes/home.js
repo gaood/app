@@ -35,7 +35,6 @@ var storage = multer.diskStorage({
       var userid="5e11f860d47c11e9b0d60ff8b54fb8a9";
       const insertContent = QUESTION_INSERT_CONTENT(
         `"${userid}"`,
-        //ctx.request.body.type,
         1,
         `"${ctx.request.body.content}"`,
       ) 
@@ -64,9 +63,9 @@ var storage = multer.diskStorage({
             ctx.throw(412,err);
             ctx.body = err;
         }else{
-            console.log("done.");
-            console.log(info);
-            var ret = info;
+            ctx.body={
+              "status":0
+            }
         }
     })
       console.log(sqlParamsEntity)
