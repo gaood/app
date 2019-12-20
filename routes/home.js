@@ -64,6 +64,7 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
       console.log(code);
     }
   })
+  console.log(code);
   ctx.body = {
     "status": code
   }
