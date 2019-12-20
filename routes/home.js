@@ -62,12 +62,16 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
       console.log("结果");
       code = 0;
       console.log(code);
-      ctx.body = {
-        "status": code
-      }
+      
     }
     
-  })
+  }).finally(()=>{
+    ctx.body = {
+      "status": code
+    }
+  }
+
+  )
   
 })
 
