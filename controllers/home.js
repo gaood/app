@@ -2,6 +2,9 @@ const path = require('path');
 const { query } = require('../utils/query');
 const { QUERY_TABLE } = require('../utils/sql');
 const multer = require('multer');
+const Mock = require('mockjs');
+const Random = Mock.Random; 
+const {indexData} = require('../mockjs/index')
 let fs = require("fs");
 
 
@@ -18,11 +21,7 @@ class HomeCtl {
         ctx.body = { url:  `http://123.206.230.76/uploads/${basename}` };
     }
     async test(ctx){
-        console.log("########----test----############")
-        await query(QUERY_TABLE('user_articles')).then((res)=>{
-          console.log("查询")
-          console.log(res)
-        })
+        ctx.body = await indexData
     
     }
 

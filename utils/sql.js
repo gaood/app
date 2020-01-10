@@ -36,7 +36,7 @@ const QUESTION_INSERT_CONTENT = (u_id, a_type, content) => `INSERT user_articles
 //插入分类
 const QUESTION_INSERT_TYPE = (type_desc, type_weight = 0) => `INSERT article_type(type_desc,type_weight) VALUES("${type_desc}",${type_weight});`
 //插入图片地址
-const QUESTION_INSERT_IMAGE = (image_url) => `INSERT article_images(articles_id,image_url)VALUES((select max(a_id) from user_articles) ,"${image_url}");`
+const QUESTION_INSERT_IMAGE = (image_url) => `INSERT article_images(articles_id,image_url)VALUES((select max(a_id) from user_article) ,"${image_url}");`
 
 
 module.exports = {

@@ -6,7 +6,6 @@ const multer = require('koa-multer');
 const path = require('path')
 const funcCtl = require('../controllers/func')
 
-
 router.get('/', homeCtl.index)
 
 
@@ -28,6 +27,7 @@ var upload = multer({ storage });
 var fileList = [];
 router.post('/upload', upload.single('file'), async (ctx, next) => {
   var sqlParamsEntity = [];
+  
   var userid = "5e11f860d47c11e9b0d60ff8b54fb8a9";
   const insertContent = QUESTION_INSERT_CONTENT(
     `"${userid}"`,
@@ -35,9 +35,15 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
     `"${ctx.request.body.content}"`,
   )
   sqlParamsEntity.push(insertContent);
-  var files = ctx.request.files['files[]']
+
+  //app上
+  //var files = ctx.request.files['files[]']
+
+  //pc端
+  var files =ctx.request.files.file
+
+
   var origin = "http://123.206.230.76"
-  console.log(files)
   if (files instanceof Array) {
     files.forEach((item, index, array) => {
       const basename = path.basename(item.path)
@@ -45,26 +51,14 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
       sqlParamsEntity.push(insertImage);
     })
   } else {
-    console.log(files)
     const basename = path.basename(files.path)
-    console.log(basename)
     const insertImage = QUESTION_INSERT_IMAGE(`${origin}/uploads/${basename}`)
     sqlParamsEntity.push(insertImage);
   }
-
-  funcCtl.execTrans(sqlParamsEntity, (err, info) => {
-    if (err) {
-      console.error("事务执行失败******************");
-      ctx.throw(412, err);
-       var code = 1;
-    } else {
-      console.log("结果");
-      var code = 0;
-      console.log(code);
-    }
-  })
-  ctx.body={
-    "status":code
+  let res = await funcCtl.execTrans(sqlParamsEntity,   (err, info) =>  {
+  });
+  ctx.body = {
+    "message":res
   }
 })
 

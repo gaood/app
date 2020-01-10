@@ -1,5 +1,6 @@
 const { pool, query } = require('../utils/query');
 const { QUERY_TABLE, CHECK_PHONE } = require('../utils/sql');
+const Mock = require('mockjs')
 var async = require("async");
 
 
@@ -31,61 +32,77 @@ class FuncCtl {
       }
     })
   }
-  async execTrans(sqlparamsEntities, callback) {
-    pool.getConnection(function (err, connection) {
-      if (err) {
-        return callback(err, null);
-      }
-      connection.beginTransaction(function (err) {
+ execTrans(sqlparamsEntities, callback) {
+    return new Promise((resolve, reject)=>{
+      pool.getConnection(function (err, connection) {
         if (err) {
+          reject("err")
           return callback(err, null);
         }
-        console.log("开始执行transaction，共执行" + sqlparamsEntities.length + "条数据");
-        var funcAry = [];
-        sqlparamsEntities.forEach(function (sql_param) {
-          var temp = function (cb) {
-            
-            var param ;
-            connection.query(sql_param, param, function (tErr, rows) {
-              if (tErr) {
-                connection.rollback(function () {
-                  console.log("事务失败，" + sql_param + "，ERROR：" + tErr);
-                  throw tErr;
-                });
-              } else {
-                return cb(null, 'ok');
-              }
-            })
-          };
-          funcAry.push(temp);
-        });
-        async.series(funcAry, function (err, result) {
-          console.log("transaction error: " + err);
+        connection.beginTransaction(function (err) {
           if (err) {
-            connection.rollback(function (err) {
-              console.log("transaction error: " + err);
-              connection.release();
-              return callback(err, null);
-            });
-          } else {
-            connection.commit(function (err, info) {
-              console.log("*******transaction info: " + JSON.stringify(info));
-              if (err) {
-                console.log("***************执行事务失败，" + err);
-                connection.rollback(function (err) {
-                  console.log("transaction error: " + err);
-                  connection.release();
-                  return callback(err, null);
-                });
-              } else {
-                connection.release();
-                return callback(null, info);
-              }
-            })
+            reject("err")
+            return callback(err, null);
           }
-        })
+          var funcAry = [];
+          var isRes = false
+          sqlparamsEntities.forEach(function (sql_param) {
+            var temp = function (cb) {
+              var param ;
+              connection.query(sql_param, param, function (tErr, rows) {
+                if (tErr) {
+
+                  connection.rollback(function () {
+                    console.log("事务失败，" + sql_param + "，ERROR：" + tErr);
+                    isRes = false
+                    console.log("123")
+                    throw tErr;
+                  });
+                } else {
+                  isRes = true
+                  console.log("2222")
+                  return cb(null, 'ok');
+                }
+              })
+            };
+            funcAry.push(temp);
+          });
+          if(isRes){
+            resolve("ok")
+          }else{
+            reject(new Error(12));
+          }
+          async.series(funcAry, function (err, result) {
+            console.log("transaction error: " + err);
+            if (err) {
+              connection.rollback(function (err) {
+                console.log("transaction error: " + err);
+                connection.release();
+                reject("err")
+                return callback(err, null);
+              });
+            } else {
+              connection.commit(function (err, info) {
+                //console.log("*******transaction info: " + JSON.stringify(info));
+                if (err) {
+                  console.log("***************执行事务失败，" + err);
+                  connection.rollback(function (err) {
+                    //console.log("transaction error: " + err);
+                    connection.release();
+                    reject("err")
+                    return callback(err, null);
+                  });
+                } else {
+                  connection.release();
+                  resolve(info)
+                  return callback(null, info);
+                }
+              })
+            }
+          })
+        });
       });
-    });
+    })
   }
   async  _getNewSqlParamEntity(sql, params, callback) {
     if (callback) {
@@ -100,11 +117,14 @@ class FuncCtl {
     };
   }
   async test(ctx){
-    console.log("########----test----############")
-    await query(QUERY_TABLE(user_articles)).then((res)=>{
-      console.log("查询")
-      console.log(res)
-    })
+    ctx.body = await Mock.mock({
+      'arr|1-10': [{
+      'id|+1': 1,
+      'author|+1': Random.cname(),
+      'img': Random.image('100x100'),
+      'title':Random.csentence(5, 9) 
+      }]
+    }) 
   }
 }
 
